@@ -5,18 +5,19 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.fab_cio612.CoffeeHttpServer</groupId>
-  <artifactId>my-app</artifactId>
+  <artifactId>CoffeeHttpServer</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>my-app</name>
-  <description>A simple my-app.</description>
+  <name>CoffeeHttpServer</name>
+  <description>An http server written in java</description>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>15</maven.compiler.source>
+    <maven.compiler.target>15</maven.compiler.target>
+    <exec.mainClass>com.fab_cio612.CoffeeHttpServer.App</exec.mainClass>
   </properties>
 
   <dependencies>
@@ -66,6 +67,21 @@
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.2.1</version>
+            <executions>
+                <execution>                    
+                  <goals>
+                      <goal>java</goal>
+                  </goals>
+              </execution>
+          </executions>
+          <configuration>
+               <mainClass>com.fab_cio612.CoffeeHttpServer.App</mainClass>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>

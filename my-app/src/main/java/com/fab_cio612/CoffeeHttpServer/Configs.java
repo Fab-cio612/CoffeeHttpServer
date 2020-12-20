@@ -4,10 +4,18 @@ import java.util.HashMap;
 
 public class Configs {
     
+    private static Configs instance = null;
     private HashMap<String, Object> cnfgs;
 
-    public Configs(){
+    private Configs(){
         cnfgs = new HashMap<>();
+    }
+
+    public static Configs getInstance(){
+        if(instance == null){
+            instance = new Configs();
+        }
+        return instance;
     }
 
     public Object getConfig(String key){

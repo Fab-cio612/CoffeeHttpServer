@@ -22,4 +22,10 @@ public class ThreadPool {
             queue.notifyAll();
         }
     }
+
+    public void stopThreadPool(){
+        for(PoolThread thread : pool){
+            thread.stopThread();
+        }
+    }
 }
