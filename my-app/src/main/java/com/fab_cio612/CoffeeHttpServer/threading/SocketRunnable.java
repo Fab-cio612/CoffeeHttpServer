@@ -17,7 +17,7 @@ public class SocketRunnable implements Runnable {
 
     public SocketRunnable(Socket socket){
         this.socket = socket;
-        manager = new RequestManager();
+        manager = RequestManager.getInstance();
     }
 
     public void run(){
@@ -39,6 +39,7 @@ public class SocketRunnable implements Runnable {
 
             //create Request Object and pass to RequestManager
             Response response = manager.processRequest(Utils.buildRequest(inputMsg));
+            //send response and close connection
             output.println(response.toString());
             in.close();
             output.close();
