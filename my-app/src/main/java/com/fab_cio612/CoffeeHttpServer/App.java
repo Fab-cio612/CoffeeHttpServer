@@ -19,11 +19,11 @@ public class App {
         Configs cfg = Configs.getInstance();
         cfg.loadConfigs();
 
-        pool = new ThreadPool(10, 20);//!use values from configs
+        pool = new ThreadPool(Integer.parseInt(cfg.getConfig("NumberOfThreads")), Integer.parseInt(cfg.getConfig("RequestLimit")));
 
         //start ServerSocket
         try {
-            socket = new ServerSocket(8080); //use port from configs
+            socket = new ServerSocket(Integer.parseInt(cfg.getConfig("Port")));
             running = true;
             System.out.println("Server started!");
         } catch(IOException e){

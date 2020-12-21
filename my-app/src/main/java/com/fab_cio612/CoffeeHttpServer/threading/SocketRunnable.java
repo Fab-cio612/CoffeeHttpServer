@@ -6,12 +6,18 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import com.fab_cio612.CoffeeHttpServer.Utils;
+import com.fab_cio612.CoffeeHttpServer.requests.RequestManager;
+import com.fab_cio612.CoffeeHttpServer.requests.Response;
+
 public class SocketRunnable implements Runnable {
     
     private Socket socket;
+    private RequestManager manager;
 
     public SocketRunnable(Socket socket){
         this.socket = socket;
+        manager = new RequestManager();
     }
 
     public void run(){
@@ -31,7 +37,9 @@ public class SocketRunnable implements Runnable {
 
             inputMsg = strBld.toString();
 
-            output.println("HTTP/1.1 200 OK\nContent-Length: 46\nContent-Type: text/html\nConnection: Closed\n\r\n<html><body><h1>Hello, World!</h1></body></html>");
+            //create Request Object and pass to RequestManager
+            Response response = manager.processRequest(Utils.buildRequest(inputMsg));
+            output.println(response.toString());
             in.close();
             output.close();
         }catch(IOException e){
