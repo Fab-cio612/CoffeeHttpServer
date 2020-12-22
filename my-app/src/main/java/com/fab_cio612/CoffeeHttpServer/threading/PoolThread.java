@@ -33,6 +33,7 @@ public class PoolThread extends Thread{
                 task.run();
             } catch (RuntimeException e) {
                 System.out.println("Error running Task: " + e.getMessage());
+                e.printStackTrace();
             }
         }
 

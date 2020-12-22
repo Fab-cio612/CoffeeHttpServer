@@ -9,10 +9,10 @@ public class Utils {
     public static Request buildRequest(String requestString){
         Request req = new Request();
         //split request and content and set content
-        String[] arr = requestString.split("\r\n\r\n");
-        req.setContent(arr[1]);
+        String[] arr = requestString.split("\r\n");
+        if(arr.length > 1) req.setContent(arr[1]);
         //split request and all headers
-        String[] arrTwo = arr[1].split("\n");
+        String[] arrTwo = arr[0].split("\n");
         //split request and set values
         String[] lineOne = arrTwo[0].split(" ");
         req.setMethod(lineOne[0]);

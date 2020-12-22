@@ -16,11 +16,18 @@ public class RequestManager {
         return instance;
     }
 
-    public void addHandler(Handler handler){
+    public synchronized void addHandler(Handler handler){
         handlers.add(handler);
     }
 
     public Response processRequest(Request req){
-        return null;
+        Response res = new Response();
+        res.setCode("200");
+        res.setMessage("OK");
+        res.addHeader("Content-Length", "48");
+        res.addHeader("Content-Type", "text/html");
+        res.addHeader("Connection", "closed");
+        res.setContent("<html><body><h1>Hello, World!</h1></body></html>");
+        return res;
     }
 }
