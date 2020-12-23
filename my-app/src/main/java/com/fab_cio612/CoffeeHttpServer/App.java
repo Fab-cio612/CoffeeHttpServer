@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.fab_cio612.CoffeeHttpServer.requests.RequestManager;
 import com.fab_cio612.CoffeeHttpServer.threading.SocketRunnable;
 import com.fab_cio612.CoffeeHttpServer.threading.ThreadPool;
 
@@ -18,6 +19,9 @@ public class App {
 
         Configs cfg = Configs.getInstance();
         cfg.loadConfigs();
+
+        RequestManager reqMan = RequestManager.getInstance();
+        reqMan.loadHandlers();
 
         pool = new ThreadPool(Integer.parseInt(cfg.getConfig("NumberOfThreads")), Integer.parseInt(cfg.getConfig("RequestLimit")));
 

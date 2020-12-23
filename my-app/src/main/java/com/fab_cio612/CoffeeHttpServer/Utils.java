@@ -1,6 +1,12 @@
 package com.fab_cio612.CoffeeHttpServer;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import com.fab_cio612.CoffeeHttpServer.requests.Request;
+import com.fab_cio612.CoffeeHttpServer.requests.Response;
 
 public class Utils {
     
@@ -23,5 +29,33 @@ public class Utils {
             req.addHeader(header[0], header[1].trim());
         }
         return req;
+    }
+
+    public static String readFile(String path){
+        try(
+            BufferedReader reader = new BufferedReader(new FileReader(path));
+        ){
+            String line;
+            StringBuilder strBld = new StringBuilder();
+
+            while((line = reader.readLine()) != null){
+                strBld.append(line);
+            }
+
+            return strBld.toString();
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+            return "404";
+        }catch(IOException e){
+            e.printStackTrace();
+            return "500";
+        }
+    }
+
+    public static Response create404Response(){
+        Response res = new Response();
+        res.setCode("404");
+        res.setMessage("Not Found");
+        return res;
     }
 }
