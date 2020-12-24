@@ -33,6 +33,14 @@ public class Response {
         content = s;
     }
 
+    public String getContent(){
+        return content;
+    }
+
+    public String getHeader(String key){
+        return headers.get(key);
+    }
+
     public String toString(){
         StringBuilder strBld = new StringBuilder();
         //add first line

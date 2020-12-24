@@ -7,8 +7,6 @@ public class Handler {
 
     public Handler(){
         handlerPath = "/";
-        RequestManager reqMan = RequestManager.getInstance();
-        reqMan.addHandler(this);
     }
 
     public String getHandlerPath(){
