@@ -1,12 +1,18 @@
 package com.fab_cio612.CoffeeHttpServer.requests;
 
+import java.io.ObjectInputFilter.Config;
+
+import com.fab_cio612.CoffeeHttpServer.Configs;
+
 public class Handler {
     
     //path (i.e. http://www.example.com/ "foo/bar" ) this handler responds to
-    private String handlerPath;
+    protected String handlerPath;
+    protected Configs cfg;
 
     public Handler(){
         handlerPath = "/";
+        cfg = Configs.getInstance();
     }
 
     public String getHandlerPath(){
@@ -14,39 +20,39 @@ public class Handler {
     }
     
     //Functions for each Http method
-    public void get(){
-        //
+    public Response get(Request req){
+        return null;
     }
 
-    public void head(){
-        //
+    public Response head(Request req){
+        return null;
     }
 
-    public void post(){
-        //
+    public Response post(Request req){
+        return null;
     }
 
-    public void put(){
-        //
+    public Response put(Request req){
+        return null;
     }
     
-    public void delete(){
-        //
+    public Response delete(Request req){
+        return null;
     }
 
-    public void connect(){
-        //
+    public Response connect(Request req){
+        return null;
     }
 
-    public void options(){
-        //
+    public Response options(Request req){
+        return null;
     }
 
-    public void trace(){
-        //
+    public Response trace(Request req){
+        return null;
     }
 
-    public void patch(){
-        //
+    public Response patch(Request req){
+        return null;
     }
 }

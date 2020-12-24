@@ -3,6 +3,7 @@ package com.fab_cio612.CoffeeHttpServer.threading;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -28,7 +29,7 @@ public class SocketRunnable implements Runnable {
 
         try{
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
+            OutputStream output = socket.getOutputStream();
 
             while((inputLine = in.readLine()) != null){
                 if(inputLine.isEmpty()) break;
@@ -38,9 +39,10 @@ public class SocketRunnable implements Runnable {
             inputMsg = strBld.toString();
 
             //create Request Object and pass to RequestManager
-            Response response = manager.processRequest(Utils.buildRequest(inputMsg));
+            byte[] response = manager.processRequest(Utils.buildRequest(inputMsg));
             //send response and close connection
-            output.println(response.toString());
+            output.write(response);
+            output.flush();
             in.close();
             output.close();
         }catch(IOException e){

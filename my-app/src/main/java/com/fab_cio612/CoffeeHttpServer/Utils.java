@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import com.fab_cio612.CoffeeHttpServer.requests.Request;
-import com.fab_cio612.CoffeeHttpServer.requests.Response;
 
 public class Utils {
     
@@ -52,10 +51,39 @@ public class Utils {
         }
     }
 
-    public static Response create404Response(){
-        Response res = new Response();
-        res.setCode("404");
-        res.setMessage("Not Found");
-        return res;
+    //Does only return common MIME Types
+    public static String getMIMEType(String res){
+        if(res.endsWith(".html") || res.endsWith(".htm")){
+            return "text/html";
+        }else if(res.endsWith(".css")){
+            return "text/css";
+        }else if(res.endsWith(".js")){
+            return "text/javascript";
+        }else if(res.endsWith(".txt")){
+            return "text/plain";
+        }else if(res.endsWith(".xml")){
+            return "text/xml";
+        }else if(res.endsWith(".mp4")){
+            return "video/mp4";
+        }else if(res.endsWith(".mpeg") || res.endsWith(".mpg") || res.endsWith(".mpe")){
+            return "video/mpeg";
+        }else if(res.endsWith(".bmp")){
+            return "image/bmp";
+        }else if(res.endsWith(".gif")){
+            return "image/gif";
+        }else if(res.endsWith(".jpeg") || res.endsWith(".jpg") || res.endsWith(".jpe")){
+            return "image/jpeg";
+        }else if(res.endsWith(".png")){
+            return "image/png";
+        }else if(res.endsWith(".svg")){
+            return "image/svg+xml";
+        }else if(res.endsWith(".ico")){
+            return "image/x-icon";
+        }else if(res.endsWith(".mp3")){
+            return "audio/mpeg";
+        }else if(res.endsWith(".wav")){
+            return "audio/wav";
+        }
+        return null;
     }
 }

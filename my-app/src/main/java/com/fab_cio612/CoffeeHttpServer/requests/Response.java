@@ -9,12 +9,14 @@ public class Response {
     private String message;
     private HashMap<String, String> headers;
     private String content;
+    private byte[] compressedContent;
 
     public Response(){
-        code = "200";
-        message = "OK";
+        code = null;
+        message = null;
         headers = new HashMap<>();
         content = "";
+        compressedContent = null;
     }
 
     public void setCode(String s){
@@ -33,6 +35,14 @@ public class Response {
         content = s;
     }
 
+    public void setCompressedContent(byte[] b){
+        compressedContent = b;
+    }
+
+    public String getCode(){
+        return code;
+    }
+
     public String getContent(){
         return content;
     }
@@ -41,16 +51,27 @@ public class Response {
         return headers.get(key);
     }
 
-    public String toString(){
+    public byte[] toBytes(){
         StringBuilder strBld = new StringBuilder();
+        byte[] res;
         //add first line
         strBld.append("HTTP/1.1 " + code + " " + message + "\r\n");
         //add headers
         for(Map.Entry<String, String> entry : headers.entrySet()){
             strBld.append(entry.getKey() + ": " + entry.getValue() + "\r\n");
         }
-        //add CRLF and content
-        strBld.append("\r\n" + content);
-        return strBld.toString();
+        //add CRLF
+        strBld.append("\r\n");
+        //check if compressedContent exists
+        if(compressedContent == null){
+            strBld.append(content);
+            res = strBld.toString().getBytes();
+        }else{
+            String partOne = strBld.toString();
+            res = new byte[partOne.length() + compressedContent.length];
+            System.arraycopy(partOne.getBytes(), 0, res, 0, partOne.length());
+            System.arraycopy(compressedContent, 0, res, partOne.length(), compressedContent.length);
+        }
+        return res;
     }
 }

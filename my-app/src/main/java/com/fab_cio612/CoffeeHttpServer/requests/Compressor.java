@@ -11,7 +11,7 @@ public class Compressor {
 
     //method for encodings: gzip, deflate
 
-    public static String encodeGzip(String s){
+    public static byte[] encodeGzip(String s){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try{
             GZIPOutputStream gzip = new GZIPOutputStream(baos);
@@ -20,7 +20,7 @@ public class Compressor {
         }catch(IOException e){
             e.printStackTrace();
         }
-        return new String(baos.toByteArray());
+        return baos.toByteArray();
     }
 
     public static String encodeDeflate(String s){
