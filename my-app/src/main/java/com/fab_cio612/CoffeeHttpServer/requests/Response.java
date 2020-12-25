@@ -47,6 +47,10 @@ public class Response {
         return content;
     }
 
+    public byte[] getCompressedContent(){
+        return compressedContent;
+    }
+
     public String getHeader(String key){
         return headers.get(key);
     }

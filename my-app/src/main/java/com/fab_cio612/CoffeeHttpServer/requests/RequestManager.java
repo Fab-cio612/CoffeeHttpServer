@@ -77,14 +77,22 @@ public class RequestManager {
                     res.setCompressedContent(Compressor.encodeGzip(res.getContent()));
                     res.addHeader("Content-Encoding", "gzip");
                 }else if(encodings.contains("deflate")){
-                    //res.setCompressedContent(Compressor.encodeDeflate(res.getContent()));
+                    res.setCompressedContent(Compressor.encodeDeflate(res.getContent()));
                     res.addHeader("Content-Encoding", "deflate");
                 }
             }
         }
+        //add headers
 
-        res.addHeader("Content-Length", String.valueOf(res.getContent().length()));
+        //contentLength
+        if(res.getCompressedContent() == null){
+            res.addHeader("Content-Length", String.valueOf(res.getContent().length()));
+        }else {
+            res.addHeader("Content-Length", String.valueOf(res.getCompressedContent().length));
+        }
+
         res.addHeader("Connection", "closed");
+        res.addHeader("Server", "CoffeeServer v0.6.1");
 
         return res.toBytes();
     }

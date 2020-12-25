@@ -23,7 +23,7 @@ public class Compressor {
         return baos.toByteArray();
     }
 
-    public static String encodeDeflate(String s){
+    public static byte[] encodeDeflate(String s){
         Deflater def = new Deflater();
         def.setInput(s.getBytes());
         def.finish();
@@ -34,6 +34,6 @@ public class Compressor {
 
         if(size > 1024) return null;
 
-        return new String(out);
+        return out;
     }
 }

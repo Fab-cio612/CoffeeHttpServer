@@ -43,10 +43,8 @@ public class Utils {
 
             return strBld.toString();
         }catch(FileNotFoundException e){
-            e.printStackTrace();
             return "404";
         }catch(IOException e){
-            e.printStackTrace();
             return "500";
         }
     }

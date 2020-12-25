@@ -1,8 +1,24 @@
 package com.fab_cio612.CoffeeHttpServer.requests;
 
+import com.fab_cio612.CoffeeHttpServer.Configs;
+
 public class StandardResponses {
     
     private StandardResponses(){}
+
+    public static Response create400Response(){
+        Response res = new Response();
+        res.setCode("400");
+        res.setMessage("Bad Request");
+        return res;
+    }
+
+    public static Response create403Response(){
+        Response res = new Response();
+        res.setCode("403");
+        res.setMessage("Forbidden");
+        return res;
+    }
 
     public static Response create404Response(){
         Response res = new Response();
@@ -11,10 +27,11 @@ public class StandardResponses {
         return res;
     }
     
-    public static Response create400Response(){
+    public static Response create405Response(){
         Response res = new Response();
-        res.setCode("400");
-        res.setMessage("Bad Request");
+        res.setCode("405");
+        res.setMessage("Method Not Allowed");
+        res.addHeader("Allow", Configs.getInstance().getConfig("AllowedMethods"));
         return res;
     }
 

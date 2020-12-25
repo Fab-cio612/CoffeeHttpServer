@@ -1,7 +1,5 @@
 package com.fab_cio612.CoffeeHttpServer.requests;
 
-import java.io.ObjectInputFilter.Config;
-
 import com.fab_cio612.CoffeeHttpServer.Configs;
 
 public class Handler {
@@ -20,39 +18,50 @@ public class Handler {
     }
     
     //Functions for each Http method
+    //return 405 response if method is not allowed
+    //if allowed default 403 response will be sent
     public Response get(Request req){
-        return null;
+        if(!cfg.getConfig("AllowedMethods").contains("GET")) return StandardResponses.create405Response();
+        return StandardResponses.create403Response();
     }
 
     public Response head(Request req){
-        return null;
+        if(!cfg.getConfig("AllowedMethods").contains("HEAD")) return StandardResponses.create405Response();
+        return StandardResponses.create403Response();
     }
 
     public Response post(Request req){
-        return null;
+        if(!cfg.getConfig("AllowedMethods").contains("POST")) return StandardResponses.create405Response();
+        return StandardResponses.create403Response();
     }
 
     public Response put(Request req){
-        return null;
+        if(!cfg.getConfig("AllowedMethods").contains("PUT")) return StandardResponses.create405Response();
+        return StandardResponses.create403Response();
     }
     
     public Response delete(Request req){
-        return null;
+        if(!cfg.getConfig("AllowedMethods").contains("DELETE")) return StandardResponses.create405Response();
+        return StandardResponses.create403Response();
     }
 
     public Response connect(Request req){
-        return null;
+        if(!cfg.getConfig("AllowedMethods").contains("CONNECT")) return StandardResponses.create405Response();
+        return StandardResponses.create403Response();
     }
 
     public Response options(Request req){
-        return null;
+        if(!cfg.getConfig("AllowedMethods").contains("OPTIONS")) return StandardResponses.create405Response();
+        return StandardResponses.create403Response();
     }
 
     public Response trace(Request req){
-        return null;
+        if(!cfg.getConfig("AllowedMethods").contains("TRACE")) return StandardResponses.create405Response();
+        return StandardResponses.create403Response();
     }
 
     public Response patch(Request req){
-        return null;
+        if(!cfg.getConfig("AllowedMethods").contains("PATCH")) return StandardResponses.create405Response();
+        return StandardResponses.create403Response();
     }
 }

@@ -6,7 +6,7 @@
 
   <groupId>com.fab_cio612.CoffeeHttpServer</groupId>
   <artifactId>CoffeeHttpServer</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.6.1</version>
 
   <name>CoffeeHttpServer</name>
   <description>An http server written in java</description>
