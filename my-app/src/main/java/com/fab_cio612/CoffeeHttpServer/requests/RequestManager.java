@@ -1,16 +1,28 @@
 package com.fab_cio612.CoffeeHttpServer.requests;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
+import com.fab_cio612.CoffeeHttpServer.cache.Cache;
 import com.fab_cio612.CoffeeHttpServer.requests.handlers.*;
 
 public class RequestManager {
     
     private static RequestManager instance = null;
     private ArrayList<Handler> handlers;
+    private SimpleDateFormat dateFormat;
+    private Cache cache;
 
     private RequestManager(){
         handlers = new ArrayList<>();
+        cache = Cache.getInstance();
+
+        //create DateFormat for Date header
+        dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss", Locale.US);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
 
     public static RequestManager getInstance(){
@@ -31,6 +43,9 @@ public class RequestManager {
                 //choose method
                 switch(req.getMethod()){
                     case "GET":
+                        //if get check cache
+                        res = cache.getFromCache(req);
+                        if(res != null) return res.toBytes();
                         res = h.get(req);
                         break;
                     case "HEAD":
@@ -58,6 +73,7 @@ public class RequestManager {
                         res = h.patch(req);
                         break;
                     default:
+                        //return 400 Bad request if invalid method
                         res = StandardResponses.create400Response();
                         break;
                 }
@@ -70,7 +86,7 @@ public class RequestManager {
         if(!res.getContent().equals("")){
             //check if mime type should be compressed
             String type = res.getHeader("Content-Type");
-            if(!type.contains("audio") || !type.contains("video") || !type.contains("image")){
+            if(!(type.contains("audio") || type.contains("video") || type.contains("image"))){
                 //Choose correct encoding
                 String encodings = req.getHeader("Accept-Encoding");
                 if(encodings.contains("gzip")){
@@ -85,15 +101,20 @@ public class RequestManager {
         //add headers
 
         //contentLength
-        if(res.getCompressedContent() == null){
-            res.addHeader("Content-Length", String.valueOf(res.getContent().length()));
-        }else {
+        if(res.getCompressedContent() != null){
             res.addHeader("Content-Length", String.valueOf(res.getCompressedContent().length));
+        }else if(!res.getContent().equals("")){
+            res.addHeader("Content-Length", String.valueOf(res.getContent().length()));
         }
 
         res.addHeader("Connection", "closed");
-        res.addHeader("Server", "CoffeeServer v0.6.1");
+        res.addHeader("Server", "CoffeeServer v0.7.1");
+        res.addHeader("Date", dateFormat.format(new Date()) + " GMT");
 
+        //add to cache if method was get;
+        if(req.getMethod().equals("GET")){
+            cache.addToCache(req.getTarget(), res);
+        }
         return res.toBytes();
     }
 }

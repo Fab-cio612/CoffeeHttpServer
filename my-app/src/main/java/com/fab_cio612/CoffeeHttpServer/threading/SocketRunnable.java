@@ -4,12 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 import com.fab_cio612.CoffeeHttpServer.Utils;
 import com.fab_cio612.CoffeeHttpServer.requests.RequestManager;
-import com.fab_cio612.CoffeeHttpServer.requests.Response;
 
 public class SocketRunnable implements Runnable {
     

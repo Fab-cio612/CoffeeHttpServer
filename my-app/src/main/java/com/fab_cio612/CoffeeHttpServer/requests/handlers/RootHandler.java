@@ -15,12 +15,13 @@ public class RootHandler extends Handler {
     @Override
     public Response get(Request req){
         Response res;
+        String resource = req.getTarget();
         //check if index.html is requested
-        if(req.getTarget().equals("/")){
-            req.setTarget("/index.html");
+        if(resource.equals("/")){
+            resource = "/index.html";
         }
         //read resource
-        String file = Utils.readFile(cfg.getConfig("Directory") + req.getTarget().replace("/", "\\"));
+        String file = Utils.readFile(cfg.getConfig("Directory") + resource.replace("/", "\\"));
         //check if successful
         if(file.equals("404")){
             res = StandardResponses.create404Response();
@@ -30,7 +31,7 @@ public class RootHandler extends Handler {
             res = new Response();
             res.setCode("200");
             res.setMessage("OK");
-            res.addHeader("Content-Type", Utils.getMIMEType(req.getTarget()));
+            res.addHeader("Content-Type", Utils.getMIMEType(resource));
             res.setContent(file);
         }
         return res;
